@@ -1,22 +1,32 @@
-const express = require("express");
-const request = require("request");
-const cheerio = require("cheerio");
+import { NseIndia } from "stock-nse-india";
+import express from "express";
+import cors from "cors";
 const app = express();
+const port = 3000;
+const nseIndia = new NseIndia();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
-app.get("/api", function (req, res) {
-  var url = "https://www.screener.in/company/VENKEYS/";
-  request(url, function (error, response, html) {
-    if (!error) {
-      var $ = cheerio.load(html);
-      var company = $(".flex-row").children("h1").text,
-        pClose = [],
-        currentPrice = [],
-        change = [];
-      currentPrice = $("span .number").eq(1).text();
-      res.send(currentPrice);
-    }
+app.get("/allsymbols", (req, res) => {
+  // To get equity details for specific symbol
+  nseIndia.getAllStockSymbols().then((symbols) => {
+    res.send(symbols);
   });
 });
 
-app.listen("80");
-console.log("Server Started... localhost:80");
+app.get(`/details/:symbol`, (req, res) => {
+    const symbol = req.params.symbol;
+    nseIndia.getEquityDetails(symbol).then((details) => {
+      res.send(details);
+    }).catch((error) => {
+      res.status(500).send(error.message);
+    });
+  });
+  
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

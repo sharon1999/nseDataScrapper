@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "NSE Stock Exchange API using node.js",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon index"
   },
@@ -10,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
     "express": "^4.16.2",
     "nodemon": "^2.0.22",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "stock-nse-india": "^1.1.2",
+    "yahoo-finance-api": "^0.2.1"
   }
 }

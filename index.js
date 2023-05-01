@@ -7,7 +7,7 @@ const nseIndia = new NseIndia();
 app.use(
   cors({
     origin: "http://localhost:5173",
-    origin: "https://gleeful-cendol-c6429c.netlify.app/",
+    origin: "https://gleeful-cendol-c6429c.netlify.app",
   })
 );
 

@@ -4,10 +4,15 @@ import cors from "cors";
 const app = express();
 const port = 3000;
 const nseIndia = new NseIndia();
+// Define the allowed origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pnltracker.netlify.app",
+];
+
 app.use(
-  
   cors({
-    origin: "http://localhost:5173" || "https://pnltracker.netlify.app",
+    origin: allowedOrigins,
   })
 );
 
@@ -19,14 +24,16 @@ app.get("/allsymbols", (req, res) => {
 });
 
 app.get(`/details/:symbol`, (req, res) => {
-    const symbol = req.params.symbol;
-    nseIndia.getEquityDetails(symbol).then((details) => {
+  const symbol = req.params.symbol;
+  nseIndia
+    .getEquityDetails(symbol)
+    .then((details) => {
       res.send(details);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).send(error.message);
     });
-  });
-  
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

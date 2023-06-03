@@ -5,9 +5,9 @@ const app = express();
 const port = 3000;
 const nseIndia = new NseIndia();
 app.use(
+  
   cors({
-    origin: "http://localhost:5173",
-    origin: "https://pnltracker.netlify.app",
+    origin: "http://localhost:5173" || "https://pnltracker.netlify.app",
   })
 );
 
